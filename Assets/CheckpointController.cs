@@ -1,0 +1,47 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class CheckpointController : MonoBehaviour
+{
+    public MeshRenderer left;
+    public MeshRenderer right;
+    public CheckpointController next;
+    public CheckpointController target;
+    public bool isFirst;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+    
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        VehicleController vehicle = other.gameObject.GetComponent<VehicleController>();
+
+        if (vehicle != null)
+        {
+            if (vehicle.target == this)
+            {
+                vehicle.target = next;
+
+                if (isFirst)
+                {
+                    vehicle.CompleteLap();
+                }
+
+                next.left.materials[0].color = Color.red;
+                next.right.materials[0].color = Color.red;
+
+                left.materials[0].color = Color.white;
+                right.materials[0].color = Color.white;
+            }
+        }
+    }
+}
+
